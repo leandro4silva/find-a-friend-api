@@ -47,20 +47,20 @@ model Pets {
 }
 
 model Photos {
-  id     String  @id @default(uuid())
+  id     String @id @default(uuid())
   name   String
   path   String
-  petsId String?
-  Pets   Pets?   @relation(fields: [petsId], references: [id])
+  petsId String
+  Pets   Pets   @relation(fields: [petsId], references: [id])
 
   @@map("photos")
 }
 
 model Requirements {
-  id          String  @id
+  id          String @id
   description String
-  Pets        Pets?   @relation(fields: [petsId], references: [id])
-  petsId      String?
+  Pets        Pets   @relation(fields: [petsId], references: [id])
+  petsId      String
 
   @@map("requirements")
 }
