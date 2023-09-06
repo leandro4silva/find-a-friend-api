@@ -1,7 +1,6 @@
 import { FastifyInstance } from "fastify";
+import { create } from "./create";
 
 export async function petsRoutes(app: FastifyInstance) {
-  app.get("/pets", (request, response) => {
-    return response.send("pets");
-  });
+  app.get("/pets", create);
 }
