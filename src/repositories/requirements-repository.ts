@@ -1,5 +1,8 @@
-import { Requirements } from "@prisma/client";
+import { Prisma, Requirements } from "@prisma/client";
 
 export interface RequirementsRepository {
-  createMany(data: Requirements[]): Promise<Requirements[]>;
+  createMany(
+    data: Prisma.RequirementsCreateWithoutPetsInput[],
+    petId: string,
+  ): Promise<Requirements[]>;
 }

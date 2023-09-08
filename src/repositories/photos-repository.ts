@@ -1,5 +1,8 @@
-import { Photos } from "@prisma/client";
+import { Photos, Prisma } from "@prisma/client";
 
 export interface PhotosRepository {
-  createMany(data: Photos[]): Promise<Photos[]>;
+  createMany(
+    data: Prisma.PhotosCreateWithoutPetsInput[],
+    petId: string,
+  ): Promise<Photos[]>;
 }
