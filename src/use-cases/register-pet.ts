@@ -1,22 +1,16 @@
 import { PetsRepository } from "@/repositories/pets-repostory";
 import { PhotosRepository } from "@/repositories/photos-repository";
 import { RequirementsRepository } from "@/repositories/requirements-repository";
-import {
-  ageAnimal,
-  sizeAnimal,
-  energyAnimal,
-  Photos,
-  Requirements,
-} from "@prisma/client";
+import { ageAnimal, sizeAnimal, energyAnimal, Prisma } from "@prisma/client";
 
 interface RegisterPetUseCaseRequest {
   name: string;
-  about: string;
+  about?: string;
   age: ageAnimal;
   size: sizeAnimal;
   energy: energyAnimal;
-  photos: Photos[];
-  requirements: Requirements[];
+  photos: Prisma.PhotosCreateWithoutPetsInput[];
+  requirements: Prisma.RequirementsCreateWithoutPetsInput[];
 }
 
 export class RegisterPetUseCase {
@@ -44,21 +38,24 @@ export class RegisterPetUseCase {
     });
 
     if (photos) {
-      const photosWithPetId = photos.map((photo) => {
-        photo.petsId = pet.id;
-        return photo;
-      });
-
-      await this.photosRepository.createMany(photosWithPetId);
+      photos = await this.photosRepository.createMany(photos, pet.id);
     }
 
     if (requirements) {
-      const requirementsWithPetId = requirements.map((requirements) => {
-        requirements.petsId = pet.id;
-        return requirements;
-      });
-
-      await this.requiremetsRepository.createMany(requirementsWithPetId);
+      requirements = await this.requiremetsRepository.createMany(
+        requirements,
+        pet.id,
+      );
     }
+
+    const petCreted = {
+      ...pet,
+      requirements,
+      photos,
+    };
+
+    return {
+      pet: petCreted,
+    };
   }
 }
