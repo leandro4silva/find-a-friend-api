@@ -36,7 +36,7 @@ enum enviromentAnimal {
 model Pets {
   id           String         @id @default(uuid())
   name         String
-  about        String
+  about        String?
   age          ageAnimal
   size         sizeAnimal
   energy       energyAnimal
@@ -47,17 +47,41 @@ model Pets {
 }
 
 model Photos {
-  id     String @id @default(uuid())
-  name   String
-  path   String
-  petsId String
-  Pets   Pets   @relation(fields: [petsId], references: [id])
+  id       String @id @default(uuid())
+  filename String
+  path     String
+  petsId   String
+  Pets     Pets   @relation(fields: [petsId], references: [id])
 
   @@map("photos")
 }
 
+model Orgs {
+  id        String    @id @default(uuid())
+  name      String
+  addressId String
+  addresses Addresses @relation(fields: [addressId], references: [id])
+  whatsapp  String
+  password  String
+
+  @@map("orgs")
+}
+
+model Addresses {
+  id           String @id @default(uuid())
+  street       String
+  neighborhood String
+  complement   String
+  locality     String
+  city         String
+  zipCode      String
+  Orgs         Orgs[]
+
+  @@map("addresses")
+}
+
 model Requirements {
-  id          String @id
+  id          String @id @default(uuid())
   description String
   Pets        Pets   @relation(fields: [petsId], references: [id])
   petsId      String
