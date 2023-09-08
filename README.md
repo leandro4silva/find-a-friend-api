@@ -4,11 +4,11 @@ Find a Friend API app.
 
 ## RFs (Requisitos funcionais)
 
-- [ ] Deve ser possivel cadastrar um pet;
+- [x] Deve ser possivel cadastrar um pet;
 - [ ] Deve ser possível listar todos os pets disponíveis para adoção em uma cidade;
 - [ ] Deve ser possível filtrar pets por suas características;
 - [ ] Deve ser possível visualizar detalhes de um pet para adoção;
-- [ ] Deve ser possível se cadastrar como uma ORG;
+- [x] Deve ser possível se cadastrar como uma ORG;
 - [ ] Deve ser possível realizar login como uma ORG;
 
 ## RNs (Regras de negocio)
