@@ -19,6 +19,7 @@ describe("Create Org Use Case", () => {
   it("should be able to create a org", async () => {
     const { org } = await sut.execute({
       name: "John Doe Org",
+      email: "johndoeorg@example.com",
       zipCode: "01001000",
       password: "123456",
       whatsapp: "(19) 99999-9999",

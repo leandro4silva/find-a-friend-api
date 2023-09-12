@@ -1,8 +1,11 @@
 import { AddressesRepository } from "@/repositories/addresses-repository";
 import { OrgsRepository } from "@/repositories/orgs-repository";
+import { hash } from "bcrypt";
+import { OrgAlreadyExistsError } from "./errors/org-already-exists-error";
 
 interface CreateOrgRequest {
   name: string;
+  email: string;
   password: string;
   whatsapp: string;
   zipCode: string;
@@ -21,8 +24,9 @@ export class CreateOrgUseCase {
 
   async execute({
     name,
-    zipCode,
+    email,
     password,
+    zipCode,
     whatsapp,
     city,
     neighborhood,
@@ -38,6 +42,12 @@ export class CreateOrgUseCase {
     //   throw new AddressNotFoundError();
     // });
 
+    const orgCreated = await this.orgsrepository.findByEmail(email);
+
+    if (orgCreated) {
+      throw new OrgAlreadyExistsError();
+    }
+
     const address = await this.addressesRepository.create({
       city,
       complement,
@@ -47,10 +57,13 @@ export class CreateOrgUseCase {
       neighborhood,
     });
 
+    const password_hash = await hash(password, 6);
+
     const org = await this.orgsrepository.create(
       {
         name,
-        password,
+        email,
+        password_hash,
         whatsapp,
       },
       address.id,
