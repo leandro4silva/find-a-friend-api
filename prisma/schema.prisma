@@ -33,41 +33,42 @@ enum enviromentAnimal {
   NARROW
 }
 
-model Pets {
-  id           String         @id @default(uuid())
+model Pet {
+  id           String        @id @default(uuid())
   name         String
   about        String?
   age          ageAnimal
   size         sizeAnimal
   energy       energyAnimal
-  photos       Photos[]
-  requirements Requirements[]
+  photos       Photo[]
+  requirements Requirement[]
 
   @@map("pets")
 }
 
-model Photos {
+model Photo {
   id       String @id @default(uuid())
   filename String
   path     String
   petsId   String
-  Pets     Pets   @relation(fields: [petsId], references: [id])
+  Pets     Pet    @relation(fields: [petsId], references: [id])
 
   @@map("photos")
 }
 
-model Orgs {
-  id        String    @id @default(uuid())
-  name      String
-  addressId String
-  addresses Addresses @relation(fields: [addressId], references: [id])
-  whatsapp  String
-  password  String
+model Org {
+  id            String  @id @default(uuid())
+  name          String
+  email         String
+  addressId     String
+  addresses     Address @relation(fields: [addressId], references: [id])
+  whatsapp      String
+  password_hash String
 
   @@map("orgs")
 }
 
-model Addresses {
+model Address {
   id           String @id @default(uuid())
   street       String
   neighborhood String
@@ -75,15 +76,15 @@ model Addresses {
   locality     String
   city         String
   zipCode      String
-  Orgs         Orgs[]
+  Orgs         Org[]
 
   @@map("addresses")
 }
 
-model Requirements {
+model Requirement {
   id          String @id @default(uuid())
   description String
-  Pets        Pets   @relation(fields: [petsId], references: [id])
+  Pets        Pet    @relation(fields: [petsId], references: [id])
   petsId      String
 
   @@map("requirements")
