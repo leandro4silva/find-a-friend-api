@@ -1,11 +1,11 @@
-import { Photos, Prisma } from "@prisma/client";
+import { Photo, Prisma } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { PhotosRepository } from "../photos-repository";
 
 export class InMemoryPhotosRepository implements PhotosRepository {
-  private items: Photos[] = [];
+  private items: Photo[] = [];
 
-  async createMany(data: Prisma.PhotosCreateWithoutPetsInput[], petId: string) {
+  async createMany(data: Prisma.PhotoCreateWithoutPetsInput[], petId: string) {
     const photos = data.map((item) => {
       const photo = {
         id: item.id ?? randomUUID(),

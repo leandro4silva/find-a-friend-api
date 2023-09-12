@@ -1,12 +1,12 @@
-import { Prisma, Requirements } from "@prisma/client";
+import { Prisma, Requirement } from "@prisma/client";
 import { RequirementsRepository } from "../requirements-repository";
 import { randomUUID } from "crypto";
 
 export class InMemoryRequirementsRepository implements RequirementsRepository {
-  private item: Requirements[] = [];
+  private item: Requirement[] = [];
 
   async createMany(
-    data: Prisma.RequirementsCreateWithoutPetsInput[],
+    data: Prisma.RequirementCreateWithoutPetsInput[],
     petId: string,
   ) {
     const requirements = data.map((requirement) => {

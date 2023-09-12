@@ -1,5 +1,5 @@
-import { Addresses, Prisma } from "@prisma/client";
+import { Address, Prisma } from "@prisma/client";
 
 export interface AddressesRepository {
-  create(data: Prisma.AddressesCreateInput): Promise<Addresses>;
+  create(data: Prisma.AddressCreateInput): Promise<Address>;
 }

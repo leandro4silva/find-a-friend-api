@@ -1,11 +1,11 @@
-import { Addresses, Prisma } from "@prisma/client";
+import { Address, Prisma } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { AddressesRepository } from "../addresses-repository";
 
 export class InMemoryAddressesRepository implements AddressesRepository {
-  private items: Addresses[] = [];
+  private items: Address[] = [];
 
-  async create(data: Prisma.AddressesCreateInput) {
+  async create(data: Prisma.AddressCreateInput) {
     const addresses = {
       id: data.id ?? randomUUID(),
       city: data.city,
