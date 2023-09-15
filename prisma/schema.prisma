@@ -42,6 +42,8 @@ model Pet {
   energy       energyAnimal
   photos       Photo[]
   requirements Requirement[]
+  orgId        String
+  Org          Org           @relation(fields: [orgId], references: [id])
 
   @@map("pets")
 }
@@ -64,6 +66,7 @@ model Org {
   addresses     Address @relation(fields: [addressId], references: [id])
   whatsapp      String
   password_hash String
+  Pet           Pet[]
 
   @@map("orgs")
 }
