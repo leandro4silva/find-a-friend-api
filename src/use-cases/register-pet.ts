@@ -9,8 +9,9 @@ interface RegisterPetUseCaseRequest {
   age: ageAnimal;
   size: sizeAnimal;
   energy: energyAnimal;
-  photos: Prisma.PhotosCreateWithoutPetsInput[];
-  requirements: Prisma.RequirementsCreateWithoutPetsInput[];
+  photos: Prisma.PhotoCreateWithoutPetsInput[];
+  requirements: Prisma.RequirementCreateWithoutPetsInput[];
+  orgId: string;
 }
 
 export class RegisterPetUseCase {
@@ -28,6 +29,7 @@ export class RegisterPetUseCase {
     energy,
     photos,
     requirements,
+    orgId,
   }: RegisterPetUseCaseRequest) {
     const pet = await this.petsRepository.create({
       name,
@@ -35,6 +37,7 @@ export class RegisterPetUseCase {
       age,
       size,
       energy,
+      orgId,
     });
 
     if (photos) {
