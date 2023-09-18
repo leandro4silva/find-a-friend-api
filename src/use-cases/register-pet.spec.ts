@@ -11,6 +11,7 @@ import { InMemoryOrgsRepository } from "@/repositories/in-memory/in-memory-orgs-
 import { hash } from "bcrypt";
 import { AddressesRepository } from "@/repositories/addresses-repository";
 import { InMemoryAddressesRepository } from "@/repositories/in-memory/in-memory-addresses-repository";
+import { Org } from "@prisma/client";
 
 let petsRepository: PetsRepository;
 let photosRepository: PhotosRepository;
@@ -18,6 +19,7 @@ let requirementsRepository: RequirementsRepository;
 let orgsRepository: OrgsRepository;
 let addressesRepository: AddressesRepository;
 let sut: RegisterPetUseCase;
+let org: Org;
 
 describe("Register Use Case", () => {
   beforeEach(async () => {
@@ -42,7 +44,7 @@ describe("Register Use Case", () => {
       neighborhood: "example neighborhood",
     });
 
-    await orgsRepository.create(
+    org = await orgsRepository.create(
       {
         name: "John Doe Org",
         email: "johndoeorg@example.com",
@@ -59,7 +61,7 @@ describe("Register Use Case", () => {
       age: "PUPPY",
       energy: "LOW",
       size: "MEDIUM",
-      orgId: "org-01",
+      orgId: org.id,
       requirements: [
         {
           description: "example description",

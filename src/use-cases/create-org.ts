@@ -2,6 +2,7 @@ import { AddressesRepository } from "@/repositories/addresses-repository";
 import { OrgsRepository } from "@/repositories/orgs-repository";
 import { hash } from "bcrypt";
 import { OrgAlreadyExistsError } from "./errors/org-already-exists-error";
+import { Org } from "@prisma/client";
 
 interface CreateOrgRequest {
   name: string;
@@ -14,6 +15,10 @@ interface CreateOrgRequest {
   neighborhood: string;
   locality: string;
   city: string;
+}
+
+interface CreateOrgResponse {
+  org: Org;
 }
 
 export class CreateOrgUseCase {
@@ -33,15 +38,7 @@ export class CreateOrgUseCase {
     complement,
     locality,
     street,
-  }: CreateOrgRequest) {
-    // const { data } = await axios<QueryCepApiResponse>({
-    //   method: "get",
-    //   url: `https://viacep.com.br/ws/${cep}/json/`,
-    // }).catch((error) => {
-    //   console.error("❌ Address not found", error.response.status);
-    //   throw new AddressNotFoundError();
-    // });
-
+  }: CreateOrgRequest): Promise<CreateOrgResponse> {
     const orgCreated = await this.orgsrepository.findByEmail(email);
 
     if (orgCreated) {

@@ -5,7 +5,7 @@ import { OrgsRepository } from "@/repositories/orgs-repository";
 import { describe, it, expect, beforeEach } from "vitest";
 import { CreateOrgUseCase } from "./create-org";
 import { compare } from "bcrypt";
-import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
+import { OrgAlreadyExistsError } from "./errors/org-already-exists-error";
 
 let orgsRepository: OrgsRepository;
 let addressesRepository: AddressesRepository;
@@ -87,6 +87,6 @@ describe("Create Org Use Case", () => {
         street: "street-01",
         neighborhood: "neighborhood-01",
       });
-    }).rejects.toBeInstanceOf(InvalidCredentialsError);
+    }).rejects.toBeInstanceOf(OrgAlreadyExistsError);
   });
 });
