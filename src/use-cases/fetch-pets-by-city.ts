@@ -3,6 +3,7 @@ import { Pet } from "@prisma/client";
 
 interface FetchPetsByCityRequest {
   city: string;
+  page: number;
 }
 
 interface FetchPetsByCityResponse {
@@ -14,5 +15,12 @@ export class FetchPetsByCity {
 
   async execute({
     city,
-  }: FetchPetsByCityRequest): Promise<FetchPetsByCityResponse> {}
+    page,
+  }: FetchPetsByCityRequest): Promise<FetchPetsByCityResponse> {
+    const pets = await this.petsRepository.findManyByCity(city, page);
+
+    return {
+      pets,
+    };
+  }
 }
