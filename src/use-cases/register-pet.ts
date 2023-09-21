@@ -7,6 +7,8 @@ import {
   energyAnimal,
   Prisma,
   $Enums,
+  dependenceLevel,
+  enviromentAnimal,
 } from "@prisma/client";
 
 interface RegisterPetUseCaseRequest {
@@ -18,6 +20,8 @@ interface RegisterPetUseCaseRequest {
   photos: Prisma.PhotoCreateWithoutPetsInput[];
   requirements: Prisma.RequirementCreateWithoutPetsInput[];
   orgId: string;
+  enviroment: enviromentAnimal;
+  dependence: dependenceLevel;
 }
 
 interface RegisterPetUseCaseResponse {
@@ -50,6 +54,8 @@ export class RegisterPetUseCase {
     photos,
     requirements,
     orgId,
+    dependence,
+    enviroment,
   }: RegisterPetUseCaseRequest): Promise<RegisterPetUseCaseResponse> {
     const pet = await this.petsRepository.create({
       name,
@@ -58,6 +64,8 @@ export class RegisterPetUseCase {
       size,
       energy,
       orgId,
+      dependence,
+      enviroment,
     });
 
     if (photos) {

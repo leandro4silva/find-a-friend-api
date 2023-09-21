@@ -62,6 +62,8 @@ describe("Register Use Case", () => {
       energy: "LOW",
       size: "MEDIUM",
       orgId: org.id,
+      dependence: "HIGH",
+      enviroment: "MODERATE",
       requirements: [
         {
           description: "example description",

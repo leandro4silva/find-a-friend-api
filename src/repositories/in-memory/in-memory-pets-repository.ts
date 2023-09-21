@@ -16,6 +16,8 @@ export class InMemoryPetsRepository implements PetsRepository {
       size: data.size,
       energy: data.energy,
       orgId: data.orgId,
+      enviroment: data.enviroment,
+      dependence: data.dependence,
     };
 
     this.pets.push(pet);
@@ -31,11 +33,9 @@ export class InMemoryPetsRepository implements PetsRepository {
     });
 
     const pets = this.pets.filter((pet) => {
-      return orgs
-        .filter((org) => org.id === pet.id)
-        .slice((page - 1) * 20, page * 20);
+      return orgs.filter((org) => org.id === pet.id);
     });
 
-    return pets;
+    return pets.slice((page - 1) * 20, page * 20);
   }
 }
