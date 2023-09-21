@@ -33,17 +33,25 @@ enum enviromentAnimal {
   NARROW
 }
 
+enum dependenceLevel {
+  LOW
+  MID
+  HIGH
+}
+
 model Pet {
-  id           String        @id @default(uuid())
+  id           String           @id @default(uuid())
   name         String
-  about        String?       @db.Text
+  about        String?          @db.Text
   age          ageAnimal
   size         sizeAnimal
   energy       energyAnimal
+  enviroment   enviromentAnimal
+  dependence   dependenceLevel
   photos       Photo[]
   requirements Requirement[]
   orgId        String
-  Org          Org           @relation(fields: [orgId], references: [id])
+  Org          Org              @relation(fields: [orgId], references: [id])
 
   @@map("pets")
 }
