@@ -36,7 +36,7 @@ enum enviromentAnimal {
 model Pet {
   id           String        @id @default(uuid())
   name         String
-  about        String?
+  about        String?       @db.Text
   age          ageAnimal
   size         sizeAnimal
   energy       energyAnimal
