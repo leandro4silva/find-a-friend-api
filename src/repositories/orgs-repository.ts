@@ -6,4 +6,5 @@ export interface OrgsRepository {
     addressId: string,
   ): Promise<Org>;
   findByEmail(email: string): Promise<Org | null>;
+  findById(orgId: string): Promise<Org | null>;
 }

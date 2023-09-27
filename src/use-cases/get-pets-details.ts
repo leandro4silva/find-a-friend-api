@@ -1,6 +1,6 @@
 import { PetsRepository } from "@/repositories/pets-repostory";
 import { Pet } from "@prisma/client";
-import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface GetPetsDetailsRequest {
   petId: string;
@@ -19,7 +19,7 @@ export class GetPetsDetailsUseCase {
     const pet = await this.petsRepository.findById(petId);
 
     if (!pet) {
-      throw new InvalidCredentialsError();
+      throw new ResourceNotFoundError();
     }
 
     return {

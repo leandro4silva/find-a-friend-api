@@ -3,6 +3,7 @@ import { GetPetsDetailsUseCase } from "./get-pets-details";
 import { InMemoryPetsRepository } from "@/repositories/in-memory/in-memory-pets-repository";
 import { hash } from "bcrypt";
 import { randomUUID } from "crypto";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 let sut: GetPetsDetailsUseCase;
 let petsRepository: InMemoryPetsRepository;
@@ -55,5 +56,13 @@ describe("Get Pets Use Case", () => {
 
     expect(pet.id).toEqual(expect.any(String));
     expect(pet.name).toEqual("pet-01");
+  });
+
+  it("should not be able to get pet details with wrong id", async () => {
+    expect(() =>
+      sut.execute({
+        petId: "pet-01",
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
