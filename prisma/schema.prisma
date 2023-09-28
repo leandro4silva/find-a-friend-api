@@ -69,7 +69,7 @@ model Photo {
 model Org {
   id            String  @id @default(uuid())
   name          String
-  email         String
+  email         String  @unique
   addressId     String
   addresses     Address @relation(fields: [addressId], references: [id])
   whatsapp      String
