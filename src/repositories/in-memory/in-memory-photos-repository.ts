@@ -5,13 +5,13 @@ import { PhotosRepository } from "../photos-repository";
 export class InMemoryPhotosRepository implements PhotosRepository {
   private items: Photo[] = [];
 
-  async createMany(data: Prisma.PhotoCreateWithoutPetsInput[], petId: string) {
+  async createMany(data: Prisma.PhotoCreateManyInput[]) {
     const photos = data.map((item) => {
       const photo = {
         id: item.id ?? randomUUID(),
         filename: item.filename,
         path: item.path,
-        petsId: petId,
+        petsId: item.petsId,
       };
 
       this.items.push(photo);

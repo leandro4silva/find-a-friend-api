@@ -69,13 +69,28 @@ export class RegisterPetUseCase {
     });
 
     if (photos) {
-      photos = await this.photosRepository.createMany(photos, pet.id);
+      const photosWithPetId = photos.map((photo) => {
+        return {
+          filename: photo.filename,
+          path: photo.path,
+          petsId: pet.id,
+        };
+      });
+
+      photos = await this.photosRepository.createMany(photosWithPetId);
     }
 
     if (requirements) {
+      const requirementsWithPetId = requirements.map((requirement) => {
+        return {
+          id: requirement.id,
+          description: requirement.description,
+          petsId: pet.id,
+        };
+      });
+
       requirements = await this.requiremetsRepository.createMany(
-        requirements,
-        pet.id,
+        requirementsWithPetId,
       );
     }
 
