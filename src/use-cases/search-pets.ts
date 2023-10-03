@@ -22,7 +22,7 @@ interface SearchPetsResponse {
   pets: Pet[];
 }
 
-export class SearchPets {
+export class SearchPetsUseCase {
   constructor(private petsRepository: PetsRepository) {}
 
   async execute({
