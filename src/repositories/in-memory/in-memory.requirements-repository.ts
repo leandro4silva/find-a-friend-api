@@ -5,15 +5,12 @@ import { randomUUID } from "crypto";
 export class InMemoryRequirementsRepository implements RequirementsRepository {
   private item: Requirement[] = [];
 
-  async createMany(
-    data: Prisma.RequirementCreateWithoutPetsInput[],
-    petId: string,
-  ) {
+  async createMany(data: Prisma.RequirementCreateManyInput[]) {
     const requirements = data.map((requirement) => {
       const requirementWithPetId = {
         id: requirement.id ?? randomUUID(),
         description: requirement.description,
-        petsId: petId,
+        petsId: requirement.petsId,
       };
 
       this.item.push(requirementWithPetId);
