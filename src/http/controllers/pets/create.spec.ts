@@ -4,7 +4,7 @@ import request from "supertest";
 import { createAndAuthenticateOrg } from "@/utils/test/create-and-authenticate-org";
 import { prisma } from "@/lib/prisma";
 
-describe("Authenticate (e2e)", async () => {
+describe("Create (e2e)", async () => {
   beforeAll(async () => {
     await app.ready();
   });
@@ -13,13 +13,15 @@ describe("Authenticate (e2e)", async () => {
     await app.ready();
   });
 
-  it("should be able to get whatsapp from org", async () => {
+  it("should be able create a pet", async () => {
     const { token } = await createAndAuthenticateOrg(app);
 
     const org = await prisma.org.findFirstOrThrow();
 
-    const pet = await prisma.pet.create({
-      data: {
+    const response = await request(app.server)
+      .post("/pets")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
         name: "John Doe",
         age: "PUPPY",
         energy: "LOW",
@@ -27,21 +29,21 @@ describe("Authenticate (e2e)", async () => {
         orgId: org.id,
         dependence: "HIGH",
         enviroment: "MODERATE",
-      },
-    });
-
-    const response = await request(app.server)
-      .post("/orgs/whatsapp")
-      .set("Authorization", `Bearer ${token}`)
-      .send({
-        petId: pet.id,
+        requirements: [
+          {
+            description: "example description",
+          },
+        ],
+        photos: [
+          {
+            filename: "example.name",
+            path: "./example.path",
+          },
+        ],
       });
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.body).toEqual(
-      expect.objectContaining({
-        whatsapp: "19999999999",
-      }),
-    );
+    // console.log(response.body);
+
+    expect(response.statusCode).toEqual(201);
   });
 });

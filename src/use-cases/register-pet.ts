@@ -17,8 +17,8 @@ interface RegisterPetUseCaseRequest {
   age: ageAnimal;
   size: sizeAnimal;
   energy: energyAnimal;
-  photos: Prisma.PhotoCreateWithoutPetsInput[];
-  requirements: Prisma.RequirementCreateWithoutPetsInput[];
+  photos: Prisma.PhotoCreateWithoutPetsInput[] | null;
+  requirements: Prisma.RequirementCreateWithoutPetsInput[] | null;
   orgId: string;
   enviroment: enviromentAnimal;
   dependence: dependenceLevel;
@@ -26,8 +26,8 @@ interface RegisterPetUseCaseRequest {
 
 interface RegisterPetUseCaseResponse {
   pet: {
-    requirements: Prisma.RequirementCreateWithoutPetsInput[];
-    photos: Prisma.PhotoCreateWithoutPetsInput[];
+    requirements: Prisma.RequirementCreateWithoutPetsInput[] | null;
+    photos: Prisma.PhotoCreateWithoutPetsInput[] | null;
     id: string;
     name: string;
     about: string | null;

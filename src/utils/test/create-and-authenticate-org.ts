@@ -3,7 +3,7 @@ import { hash } from "bcrypt";
 import { FastifyInstance } from "fastify";
 import request from "supertest";
 
-export async function createAndAithenticateOrg(app: FastifyInstance) {
+export async function createAndAuthenticateOrg(app: FastifyInstance) {
   const address = await prisma.address.create({
     data: {
       city: "example city",

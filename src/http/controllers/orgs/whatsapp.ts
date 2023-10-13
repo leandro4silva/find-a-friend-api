@@ -5,15 +5,14 @@ import { z } from "zod";
 
 export async function whatsapp(request: FastifyRequest, reply: FastifyReply) {
   const authenticateQuerySchema = z.object({
-    petId: z.string().uuid(),
+    petId: z.string(),
   });
 
-  const { petId } = authenticateQuerySchema.parse(request.query);
+  const { petId } = authenticateQuerySchema.parse(request.body);
 
   try {
     const getOrgWhatsappUseCase = makeGetOrgWhatsappUseCase();
     const { whatsapp } = await getOrgWhatsappUseCase.execute({ petId });
-
     return reply.status(200).send({ whatsapp });
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
