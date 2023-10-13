@@ -4,11 +4,11 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
 export async function whatsapp(request: FastifyRequest, reply: FastifyReply) {
-  const authenticateQuerySchema = z.object({
+  const getWhatsappBodySchema = z.object({
     petId: z.string(),
   });
 
-  const { petId } = authenticateQuerySchema.parse(request.body);
+  const { petId } = getWhatsappBodySchema.parse(request.body);
 
   try {
     const getOrgWhatsappUseCase = makeGetOrgWhatsappUseCase();

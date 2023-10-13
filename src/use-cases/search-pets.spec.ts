@@ -1,17 +1,17 @@
-import { SearchPets } from "./search-pets";
+import { SearchPetsUseCase } from "./search-pets";
 import { describe, expect, it, beforeEach } from "vitest";
 import { randomUUID } from "node:crypto";
 import { InMemoryPetsRepository } from "@/repositories/in-memory/in-memory-pets-repository";
 import { hash } from "bcrypt";
 
 let petsRepository: InMemoryPetsRepository;
-let sut: SearchPets;
+let sut: SearchPetsUseCase;
 let orgId: string;
 
 describe("Fetch Pets By City Use Case", async () => {
   beforeEach(async () => {
     petsRepository = new InMemoryPetsRepository();
-    sut = new SearchPets(petsRepository);
+    sut = new SearchPetsUseCase(petsRepository);
 
     const addressId = randomUUID();
 
